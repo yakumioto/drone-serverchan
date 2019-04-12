@@ -4,6 +4,7 @@
 ![Go Report](https://goreportcard.com/badge/github.com/yakumioto/drone-serverchan)
 ![Docker Pulls](https://img.shields.io/docker/pulls/yakumioto/drone-serverchan.svg)
 [![](https://images.microbadger.com/badges/image/yakumioto/drone-serverchan.svg)](https://microbadger.com/images/yakumioto/drone-serverchan)
+![GitHub release](https://img.shields.io/github/release/yakumioto/drone-serverchan.svg)
 
 drone ServerChan(Server酱) 微信消息通知插件
 
