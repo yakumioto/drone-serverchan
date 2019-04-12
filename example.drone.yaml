@@ -1,0 +1,26 @@
+# Plaintext key
+---
+kind: pipeline
+name: default
+
+steps:
+  - name: send-wechat
+    image: yakumioto/serverchan
+    settings:
+      key: "{your key}"
+      text: "{titel}"
+      desp: "{content}"
+
+# Secrets Key
+---
+kind: pipeline
+name: default
+
+steps:
+  - name: send-wechat
+    image: yakumioto/serverchan
+    settings:
+      key:
+        from_secret: key
+      text: "{titel}"
+      desp: "{content}"

@@ -1,0 +1,35 @@
+---
+kind: pipeline
+name: default
+
+steps:
+  - name: build
+    image: golang:1.12-alpine
+    commands:
+      - GOOS=linux CGO_ENABLED=0 go build -ldflags="-s -w" -o serverchan serverchan.go
+    when:
+      event:
+        - tag
+
+  - name: build-image
+    image: plugins/docker
+    settings:
+      username: yakumioto
+      password:
+        from_secret: docker_pwd
+      repo: yakumioto/drone-serverchan
+      auto_tag: true
+    when:
+      event:
+        - tag
+
+  - name: sendmsg
+    image: yakumioto/drone-serverchan
+    settings:
+      key:
+        from_secret: serverchan_key
+      text: succeeded
+      desp: docker build yakumioto/serverchan
+    when:
+      event:
+        - tag
