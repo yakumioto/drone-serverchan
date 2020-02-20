@@ -23,7 +23,7 @@ name: default
 
 steps:
   - name: send-wechat
-    image: yakumioto/serverchan
+    image: yakumioto/drone-serverchan
     settings:
       key: {your key}
       text: {消息标题}
@@ -39,7 +39,7 @@ name: default
 
 steps:
   - name: send-wechat
-    image: yakumioto/serverchan
+    image: yakumioto/drone-serverchan
     settings:
       key:
         from_secret: {your key}
