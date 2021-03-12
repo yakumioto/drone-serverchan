@@ -6,34 +6,33 @@ import (
 	"net/http"
 	"net/url"
 	"os"
-	"strings"
 )
-
-var (
-	key  string
-	text string
-	desp string
-)
-
-func init() {
-	key = os.Getenv("PLUGIN_KEY")
-	text = os.Getenv("PLUGIN_TEXT")
-	desp = os.Getenv("PLUGIN_DESP")
-}
 
 func main() {
-	if key == "" || text == "" {
-		log.Fatalln("key or text is required")
+	key := os.Getenv("PLUGIN_KEY")
+	title := os.Getenv("PLUGIN_TEXT")
+	desp := os.Getenv("PLUGIN_DESP")
+	openid := os.Getenv("PLUGIN_OPENID")
+
+	if key == "" || title == "" {
+		log.Fatalln("key or title[text] is required")
 	}
 
-	reqMsg := &url.Values{
-		"text": []string{text},
+	if len(title) > 32 {
+		log.Fatalln("title[text] is longer than 32 characters")
+	}
+
+	reqURL := fmt.Sprintf("https://sctapi.ftqq.com/%s.send", key)
+	res, err := http.PostForm(reqURL, url.Values{
+		"title": []string{title},
 		"desp": []string{desp},
+		"openid": []string{openid},
+	})
+	if err != nil {
+		log.Fatalln("post error:", err)
 	}
 
-	reqURL := fmt.Sprintf("https://sc.ftqq.com/%s.send", key)
-	_, err := http.Post(reqURL, "application/x-www-form-urlencoded", strings.NewReader(reqMsg.Encode()))
-	if err != nil {
-		log.Fatalln("post error: ", err)
+	if res.StatusCode != http.StatusOK {
+		log.Fatalln("status code:", res.StatusCode)
 	}
 }

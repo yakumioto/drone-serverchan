@@ -4,7 +4,7 @@ name: default
 
 steps:
   - name: build
-    image: golang:1.12-alpine
+    image: golang:1.16-alpine
     commands:
       - GOOS=linux CGO_ENABLED=0 go build -ldflags="-s -w" -o serverchan serverchan.go
     when:
@@ -16,7 +16,7 @@ steps:
     settings:
       username: yakumioto
       password:
-        from_secret: docker_pwd
+        from_secret: docker_password
       repo: yakumioto/drone-serverchan
       auto_tag: true
     when:
