@@ -7,9 +7,6 @@ steps:
     image: golang:1.16-alpine
     commands:
       - GOOS=linux CGO_ENABLED=0 go build -ldflags="-s -w" -o serverchan serverchan.go
-    when:
-      event:
-        - tag
 
   - name: build-image
     image: plugins/docker
@@ -19,9 +16,6 @@ steps:
         from_secret: docker_password
       repo: yakumioto/drone-serverchan
       auto_tag: true
-    when:
-      event:
-        - tag
 
   - name: sendmsg
     image: yakumioto/drone-serverchan
@@ -30,6 +24,3 @@ steps:
         from_secret: serverchan_key
       text: succeeded
       desp: docker build yakumioto/serverchan
-    when:
-      event:
-        - tag
